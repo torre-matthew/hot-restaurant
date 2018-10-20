@@ -40,6 +40,20 @@ app.get("/", function(req, res) {
     return res.json(waitlist);
   });
 
+  app.post("/api/tables", function(req, res) {
+      var newRes = req.body;
+
+      if(tables.length < 5) {
+        tables.push(newRes);
+        res.json(newRes);
+      } else {
+        waitlist.push(newRes);
+        res.json(newRes);
+      }
+      
+
+  });
+
   app.listen(PORT, function() {
     console.log("App listening on port: " + PORT);
   });
