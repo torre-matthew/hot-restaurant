@@ -13,18 +13,19 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 var tables = [{
-  name: "Andy"
+  customerID: "Andy1",
+  customerName: "Andy",
+  customerEmail: "fake@email.com",
+  phonenumber: "(555) 231-6458"
 }];
-var waitlist = [{
-  name: "James"
-}];
+var waitlist = [];
 
 
 app.get("/", function(req, res) {
     res.sendFile(path.join(__dirname, "index.html"));
   });
   
-  app.get("/reservations", function(req, res) {
+  app.get("/reserve", function(req, res) {
     res.sendFile(path.join(__dirname, "reservations.html"));
   });
   

@@ -100,7 +100,7 @@
         customerID: $("#reserve-unique-id").val().trim()
       };
 
-      console.log(newReservation);
+      // console.log(newReservation);
 
       // This line is the magic. It"s very similar to the standard ajax function we used.
       // Essentially we give it a URL, we give it the object we want to send, then we have a "callback".
@@ -109,16 +109,27 @@
 
       $.post("/api/tables", newReservation,
         function(data) {
+          console.log(data);
+          $.ajax({url: "/api/tables", method: "GET"})
+          .then(function(tables) {
 
-          // If a table is available... tell user they are booked.
-          if (data) {
-            alert("Yay! You are officially booked!");
-          }
+              $.ajax({url: "/api/waitlist", method: "GET"})
+              .then(function(waitlist) {
 
-          // If a table is available... tell user they on the waiting list.
-          else {
-            alert("Sorry you are on the wait list");
-          }
+                      // If a table is available... tell user they are booked.
+                    if (tables.length == 5 && waitlist.length > 0) {
+                      alert("Sorry you are on the wait list");
+                    }
+
+                    // If a table is available... tell user they on the waiting list.
+                    else {
+                      alert("Yay! You are officially booked!");
+                      
+                    }
+                      
+              }); 
+          });
+          
 
           // Clear the form when submitting
           $("#reserve-name").val("");
@@ -127,6 +138,8 @@
           $("#reserve-unique-id").val("");
 
         });
+
+       
 
     });
 
